@@ -37,11 +37,11 @@
       --primary-mid: oklch(78% 0.1 168); --primary-dark: oklch(40% 0.12 168);
       --border: oklch(89% 0.05 165); --card-bg: oklch(94% 0.055 165);
     }
-    body[data-theme="blue"] {
-      --bg: oklch(99% 0.007 230); --primary: oklch(58% 0.16 243);
-      --primary-sel: oklch(94% 0.05 235); --primary-lite: oklch(98% 0.02 235);
-      --primary-mid: oklch(78% 0.1 243); --primary-dark: oklch(42% 0.14 243);
-      --border: oklch(89% 0.05 235); --card-bg: oklch(94% 0.05 235);
+    body[data-theme="columbia"] {
+      --bg: #E5F1F6; --primary: #BDDCE8;
+      --primary-sel: #D8EAF1; --primary-lite: #E5F1F6;
+      --primary-mid: #8FBED1; --primary-dark: #5A8FA6;
+      --border: #BDDCE8; --card-bg: #D8EAF1;
     }
     body[data-theme="pink"] {
       --bg: oklch(99% 0.008 345); --primary: oklch(62% 0.17 340);
@@ -176,7 +176,8 @@
     .home-tagline { font-size: 1.1rem; color: var(--muted); line-height: 1.6; max-width: 340px; margin: 0 auto 28px; font-weight: 500; }
 
     /* Mode cards */
-    .mode-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; max-width: 680px; width: 100%; margin: 0 auto 16px; }
+    .mode-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 900px; width: 100%; margin: 0 auto 16px; }
+    @media (max-width: 860px) { .mode-cards { grid-template-columns: 1fr 1fr; max-width: 520px; } }
     .mode-card {
       border: 2px solid var(--border); border-radius: 18px; padding: 20px 16px;
       cursor: pointer; background: var(--card); text-align: center; position: relative;
@@ -414,7 +415,7 @@
     .lib-fc-rename { padding:8px 14px 10px; display:flex; gap:6px; flex-shrink:0; }
     .btn-danger { background:none; color:#dc2626; border:1.5px solid #fca5a5; border-radius:14px; }
     .btn-danger:hover:not(:disabled) { background:#fef2f2; border-color:#dc2626; opacity:1; transform:translateY(-1px); }
-    .emoji-popup  { position:fixed; background:var(--card); border:1.5px solid var(--border); border-radius:14px; padding:8px; display:grid; grid-template-columns:repeat(8,1fr); gap:2px; z-index:300; box-shadow:0 8px 28px rgba(0,0,0,.18); }
+    .emoji-popup  { position:fixed; background:var(--card); border:1.5px solid var(--border); border-radius:14px; padding:8px; display:grid; grid-template-columns:repeat(10,1fr); gap:2px; z-index:300; box-shadow:0 8px 28px rgba(0,0,0,.18); max-height:360px; overflow-y:auto; width:340px; }
     .emoji-pop-btn { font-size:1.2rem; padding:5px; border:none; background:none; cursor:pointer; border-radius:7px; transition:background .1s; line-height:1; }
     .emoji-pop-btn:hover { background:var(--primary-sel); }
 
@@ -521,12 +522,14 @@
     .sim-panel + .sim-panel { border-left:1.5px solid var(--border); }
     .sim-log-panel { background:#0f172a; }
     .sim-log { display:flex; flex-direction:column; gap:4px; }
-    .sim-entry { font-family:monospace; font-size:.82rem; line-height:1.5; padding:5px 8px; border-radius:6px; word-break:break-word; }
+    .sim-entry { font-family:monospace; font-size:.82rem; line-height:1.5; padding:5px 8px; border-radius:6px; word-break:break-word; animation:simSlideIn .18s ease; }
+    @keyframes simSlideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
     .sim-entry-in  { color:#94a3b8; background:rgba(148,163,184,.07); }
     .sim-entry-out { color:#6ee7b7; background:rgba(110,231,183,.08); }
     .sim-entry-err { color:#fca5a5; background:rgba(252,165,165,.08); }
     .sim-entry-sys { color:#64748b; font-style:italic; }
     .sim-ts { color:#475569; margin-right:5px; font-size:.78rem; }
+    .sim-count { display:inline-block; background:#1e293b; color:#94a3b8; border-radius:999px; font-size:.7rem; padding:0 5px; margin-left:4px; }
     .sim-widget { background:var(--card-bg); border:1.5px solid var(--border); border-radius:12px; overflow:hidden; }
     .sim-widget-lbl { font-size:.75rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; padding:8px 10px 4px; }
     .sim-cam-video { width:100%; display:block; max-height:150px; object-fit:cover; background:#0d0a1a; }
@@ -586,6 +589,12 @@
     <div class="brand-zone">
       <a class="brand-link" href="#" onclick="event.preventDefault();goTo(0);"
          aria-label="Go to home page" title="brainy home">
+        <svg id="mascotMini" viewBox="20 25 160 145" width="26" height="26"
+             style="flex-shrink:0;display:block;overflow:visible;" aria-hidden="true">
+          <path id="mascotMiniBody" class="mascot-mini-path"
+            d="M 100 30 C 122 22 150 30 164 52 C 178 74 174 102 162 120 C 150 138 132 152 108 158 C 84 164 58 158 42 142 C 26 126 24 100 30 76 C 36 52 58 36 100 30 Z"
+            fill="oklch(80% 0.12 283)" style="transition:fill 0.6s ease"/>
+        </svg>
         <span class="brand-logo">
           br<span class="brand-a">a</span><span class="brand-i">i</span>ny
         </span>
@@ -621,7 +630,7 @@
         <button onclick="setTheme('')"       title="Lavender" id="theme-btn-lavender" style="width:14px;height:14px;border-radius:50%;background:oklch(80% 0.12 283);border:2px solid transparent;cursor:pointer;padding:0;flex-shrink:0;"></button>
         <button onclick="setTheme('orange')" title="Peach"    id="theme-btn-orange"   style="width:14px;height:14px;border-radius:50%;background:oklch(80% 0.11 42);border:2px solid transparent;cursor:pointer;padding:0;flex-shrink:0;"></button>
         <button onclick="setTheme('green')"  title="Mint"     id="theme-btn-green"    style="width:14px;height:14px;border-radius:50%;background:oklch(78% 0.1 168);border:2px solid transparent;cursor:pointer;padding:0;flex-shrink:0;"></button>
-        <button onclick="setTheme('blue')"   title="Sky"      id="theme-btn-blue"     style="width:14px;height:14px;border-radius:50%;background:oklch(78% 0.1 243);border:2px solid transparent;cursor:pointer;padding:0;flex-shrink:0;"></button>
+        <button onclick="setTheme('columbia')" title="Columbia Blue" id="theme-btn-columbia" style="width:14px;height:14px;border-radius:50%;background:#BDDCE8;border:2px solid transparent;cursor:pointer;padding:0;flex-shrink:0;"></button>
         <button onclick="setTheme('pink')"   title="Pink"     id="theme-btn-pink"     style="width:14px;height:14px;border-radius:50%;background:oklch(80% 0.13 340);border:2px solid transparent;cursor:pointer;padding:0;flex-shrink:0;"></button>
       </div>
     </div>
@@ -662,33 +671,32 @@
         </div>
         <div class="home-tagline">Upload data. Watch your model learn. See it create something new.</div>
 
-        <!-- Mode selector -->
+        <!-- Mode selector — four direct cards -->
         <div class="mode-cards">
-          <div class="mode-card" id="mode-image" onclick="selectMode('image')">
+          <div class="mode-card" id="mode-image" onclick="selectCard('image')">
             <div class="mode-card-check">✓</div>
-            <div class="mode-card-icon">🖼️</div>
+            <div class="mode-card-icon">🎨</div>
             <div class="mode-card-name">Image Generator</div>
-            <div class="mode-card-desc">Upload photos and train a model to dream up new ones</div>
+            <div class="mode-card-desc">Make new images that look like your data</div>
           </div>
-          <div class="mode-card" id="mode-text" onclick="selectMode('text')">
+          <div class="mode-card" id="mode-text" onclick="selectCard('text')">
             <div class="mode-card-check">✓</div>
-            <div class="mode-card-icon">📝</div>
+            <div class="mode-card-icon">✍️</div>
             <div class="mode-card-name">Text Generator</div>
-            <div class="mode-card-desc">Paste writing and train a model to write in that style</div>
+            <div class="mode-card-desc">Write new text in the style of your examples</div>
           </div>
-          <div class="mode-card" id="mode-classifier" onclick="selectMode('classifier')">
+          <div class="mode-card" id="mode-clf-image" onclick="selectCard('clf-image')">
             <div class="mode-card-check">✓</div>
-            <div class="mode-card-icon">🏷️</div>
-            <div class="mode-card-name">Classifier</div>
-            <div class="mode-card-desc">Label examples and train a model to sort new ones</div>
+            <div class="mode-card-icon">🏷️🖼️</div>
+            <div class="mode-card-name">Image Classifier</div>
+            <div class="mode-card-desc">Tell what's in a picture — cat? dog? bird?</div>
           </div>
-        </div>
-
-        <!-- Classifier input-mode picker (revealed when Classifier selected) -->
-        <div id="clfInputPicker" class="clf-input-picker hidden">
-          <div class="clf-ip-card selected" id="clf-ip-image" onclick="selectClfInputMode('image')">🖼️ Images</div>
-          <div class="clf-ip-card" id="clf-ip-text"  onclick="selectClfInputMode('text')">📝 Text</div>
-          <div class="clf-ip-card" id="clf-ip-audio" onclick="selectClfInputMode('audio')" style="opacity:.5;cursor:not-allowed;pointer-events:none;" title="Coming soon">🎙️ Audio <span style="font-size:.72rem;font-weight:700;opacity:.7">(soon)</span></div>
+          <div class="mode-card" id="mode-clf-text" onclick="selectCard('clf-text')">
+            <div class="mode-card-check">✓</div>
+            <div class="mode-card-icon">🏷️📝</div>
+            <div class="mode-card-name">Text Classifier</div>
+            <div class="mode-card-desc">Sort text into categories — happy? sad?</div>
+          </div>
         </div>
 
         <button class="btn btn-primary btn-lg" id="getStartedBtn" onclick="getStarted()" disabled>
@@ -764,8 +772,27 @@
           <!-- Text upload -->
           <div id="txtUploadZone" class="hidden">
             <textarea class="txt-area" id="txtIn" placeholder="Paste text here — stories, poems, lyrics, articles…"></textarea>
-            <button class="btn btn-secondary btn-sm btn-full" onclick="addText()" style="margin-top:6px;">+ Add this text</button>
+            <div style="display:flex;gap:6px;margin-top:6px;">
+              <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="addText()">+ Add this text</button>
+              <button class="btn btn-secondary btn-sm" onclick="openBulkPaste()">+ Bulk paste</button>
+            </div>
             <div id="txtList" style="margin-top:8px;display:flex;flex-direction:column;gap:5px;"></div>
+          </div>
+
+          <!-- Bulk paste panel -->
+          <div id="bulkPastePanel" class="hidden" style="background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:6px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:.9rem;font-weight:700;">Paste your text below — we'll split it into separate examples.</div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:.88rem;">
+              <label style="display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="radio" name="bulkSplit" value="newline" checked onchange="bulkSplitChanged()"> New line</label>
+              <label style="display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="radio" name="bulkSplit" value="period" onchange="bulkSplitChanged()"> Full stop (period)</label>
+              <label style="display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="radio" name="bulkSplit" value="paragraph" onchange="bulkSplitChanged()"> Empty line (paragraph)</label>
+            </div>
+            <textarea id="bulkPasteIn" style="height:120px;resize:vertical;font-family:inherit;font-size:.88rem;padding:8px 10px;border:1.5px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);outline:none;width:100%;box-sizing:border-box;" placeholder="Paste a long text here…" oninput="bulkSplitChanged()"></textarea>
+            <div id="bulkPreviewCount" style="font-size:.85rem;color:var(--muted);font-weight:700;">Preview: paste text above to see how many examples will be added.</div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-secondary btn-sm" onclick="closeBulkPaste()">Cancel</button>
+              <button class="btn btn-primary btn-sm" id="bulkAddBtn" onclick="bulkAddExamples()" disabled>✓ Add examples</button>
+            </div>
           </div>
 
           <!-- Classifier upload -->
@@ -782,6 +809,21 @@
           </div>
           <!-- Hidden file input shared by all clf label zones -->
           <input type="file" id="clfFileIn" accept="image/*" multiple onchange="clfHandleFiles(this.files)">
+          <!-- Text classifier bulk panel -->
+          <div id="clfTextBulkPanel" class="hidden" style="background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:6px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:.9rem;font-weight:700;">Bulk paste for label: <strong id="clfTextBulkFor"></strong></div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:.88rem;">
+              <label style="display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="radio" name="clfBulkSplit" value="newline" checked onchange="clfBulkSplitChanged()"> New line</label>
+              <label style="display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="radio" name="clfBulkSplit" value="period" onchange="clfBulkSplitChanged()"> Full stop</label>
+              <label style="display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="radio" name="clfBulkSplit" value="paragraph" onchange="clfBulkSplitChanged()"> Paragraph</label>
+            </div>
+            <textarea id="clfTextBulkIn" style="height:100px;resize:vertical;font-family:inherit;font-size:.88rem;padding:8px 10px;border:1.5px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);outline:none;width:100%;box-sizing:border-box;" placeholder="Paste text here…" oninput="clfBulkSplitChanged()"></textarea>
+            <div id="clfBulkPreview" style="font-size:.85rem;color:var(--muted);font-weight:700;">Preview: paste text above.</div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-secondary btn-sm" onclick="document.getElementById('clfTextBulkPanel').classList.add('hidden')">Cancel</button>
+              <button class="btn btn-primary btn-sm" id="clfBulkAddBtn" onclick="clfBulkAddExamples()" disabled>✓ Add examples</button>
+            </div>
+          </div>
 
           <div class="count-badge" id="countBadge">0 items uploaded</div>
           <button class="btn btn-secondary btn-sm" onclick="clearData()" style="font-size:.72rem;opacity:.65;">✕ Clear all data</button>
@@ -1274,6 +1316,12 @@
       <!-- Workspace -->
       <div id="bldWorkspace">
 
+        <!-- Page header -->
+        <div style="padding:12px 0 4px;flex-shrink:0;">
+          <div style="font-size:1.15rem;font-weight:800;letter-spacing:-.02em;margin-bottom:3px;">🤖 Behavior</div>
+          <div style="font-size:.88rem;color:var(--muted);line-height:1.5;">Give your brain a body. Pick senses (inputs), what it can do (outputs), and write rules — like <em>"when the camera sees a bird, the speaker says bird!"</em></div>
+        </div>
+
         <!-- Top bar: identity + save/new -->
         <div class="bld-topbar">
           <button class="bld-emoji-btn" id="bldBotEmoji" onclick="bldOpenBotEmojiPicker(event)" title="Pick emoji">🤖</button>
@@ -1442,6 +1490,16 @@
   <div id="libraryOverlay" class="lib-overlay hidden">
     <!-- Top bar -->
     <div class="lib-ov-bar" style="padding-bottom:0;border-bottom:none;">
+      <a class="brand-link" onclick="closeLibrary();goTo(0);" style="cursor:pointer;text-decoration:none;margin-right:4px;" title="Go to Home">
+        <svg viewBox="20 25 160 145" width="26" height="26" style="flex-shrink:0;display:block;overflow:visible;" aria-hidden="true">
+          <path class="mascot-mini-path"
+            d="M 100 30 C 122 22 150 30 164 52 C 178 74 174 102 162 120 C 150 138 132 152 108 158 C 84 164 58 158 42 142 C 26 126 24 100 30 76 C 36 52 58 36 100 30 Z"
+            fill="oklch(80% 0.12 283)" style="transition:fill 0.6s ease"/>
+        </svg>
+        <span class="brand-logo">
+          br<span class="brand-a">a</span><span class="brand-i">i</span>ny
+        </span>
+      </a>
       <button class="btn btn-secondary btn-sm" onclick="closeLibrary()">← Back</button>
       <span class="lib-ov-title">📚 Library</span>
       <span id="libOvCount" style="font-size:.8rem;color:var(--muted);"></span>
@@ -1500,6 +1558,7 @@
 <script>
 // ── State ──────────────────────────────────────────────────────────────────────
 let _mode    = null;   // 'image' | 'text' | 'classifier'
+let _cardMode = null;  // 'image' | 'text' | 'clf-image' | 'clf-text'
 let _step    = 0;
 let _trained = false;
 let _lossHist = [];
@@ -1524,6 +1583,7 @@ let _trainDevice      = 'cpu';
 // Classifier-specific
 let _clfLabels  = [];   // list of label strings
 let _clfCounts  = {};   // { label: count }
+let _clfThumbs  = {};   // { label: [dataUrl, …] } — persists across re-renders
 let _clfColors  = ['#6366f1','#f59e0b','#10b981','#ef4444','#3b82f6','#8b5cf6','#ec4899','#14b8a6'];
 let _clfActive  = null; // which label file-picker is targeting
 
@@ -1732,30 +1792,24 @@ function _render() {
 }
 
 // ── Mode ───────────────────────────────────────────────────────────────────────
-function selectMode(mode) {
-  _mode = mode;
-  document.getElementById('mode-image').classList.toggle('selected', mode === 'image');
-  document.getElementById('mode-text').classList.toggle('selected', mode === 'text');
-  document.getElementById('mode-classifier').classList.toggle('selected', mode === 'classifier');
-  document.getElementById('clfInputPicker').classList.toggle('hidden', mode !== 'classifier');
+function selectCard(card) {
+  // card is one of: 'image' | 'text' | 'clf-image' | 'clf-text'
+  _cardMode = card;
+  if (card === 'image')     { _mode = 'image';      _inputMode = 'image'; }
+  else if (card === 'text') { _mode = 'text';        _inputMode = 'text'; }
+  else if (card === 'clf-image') { _mode = 'classifier'; _inputMode = 'image'; }
+  else if (card === 'clf-text')  { _mode = 'classifier'; _inputMode = 'text'; }
+  ['image','text','clf-image','clf-text'].forEach(m =>
+    document.getElementById('mode-' + m)?.classList.toggle('selected', m === card));
   document.getElementById('getStartedBtn').disabled = false;
-  const body = mode === 'classifier'
-    ? { mode, training_mode: _clfTrainingMode, input_mode: _inputMode }
-    : { mode, training_mode: _textTrainingMode };
+  const body = _mode === 'classifier'
+    ? { mode: _mode, training_mode: _clfTrainingMode, input_mode: _inputMode }
+    : { mode: _mode, training_mode: _textTrainingMode };
   fetch('/api/mode', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
   _render();
 }
 
-function selectClfInputMode(im) {
-  _inputMode = im;
-  ['image','text','audio'].forEach(m => {
-    document.getElementById('clf-ip-' + m)?.classList.toggle('selected', m === im);
-  });
-  if (_mode === 'classifier') {
-    fetch('/api/mode', { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ mode: 'classifier', training_mode: _clfTrainingMode, input_mode: im }) });
-  }
-}
+function selectMode(mode) { selectCard(mode); } // legacy alias
 
 function selectClfTrainingMode(tm) {
   _clfTrainingMode = tm;
@@ -1837,13 +1891,12 @@ function startOver() {
   _mode = null; _trained = false; _lossHist = []; _accHist = []; _gotStartEvent = false;
   _smartVizData = []; _smartHighlights = [];
   _nParams = 0; _nData = 0; _trainedEpochs = 0; _finalLoss = null; _finalAccuracy = null;
-  _clfLabels = []; _clfCounts = {}; _clfActive = null;
+  _clfLabels = []; _clfCounts = {}; _clfThumbs = {}; _clfActive = null;
   _bBotId = null; _bBotName = 'My Bot'; _bBotEmoji = '🤖';
   _bInputs = []; _bBrain = null; _bOutputs = []; _bRules = [];
-  document.getElementById('mode-image').classList.remove('selected');
-  document.getElementById('mode-text').classList.remove('selected');
-  document.getElementById('mode-classifier').classList.remove('selected');
-  document.getElementById('clfInputPicker').classList.add('hidden');
+  _cardMode = null;
+  ['image','text','clf-image','clf-text'].forEach(m =>
+    document.getElementById('mode-' + m)?.classList.remove('selected'));
   document.getElementById('getStartedBtn').disabled = true;
   document.getElementById('thumbGrid').innerHTML = '';
   document.getElementById('txtList').innerHTML   = '';
@@ -1896,6 +1949,62 @@ async function addText() {
   ta.value = '';
 }
 
+function _getBulkSplitMode() {
+  return (document.querySelector('input[name="bulkSplit"]:checked') || {}).value || 'newline';
+}
+
+function _splitBulkText(raw, mode) {
+  let parts;
+  if (mode === 'newline')    parts = raw.split('\n');
+  else if (mode === 'period') parts = raw.split(/(?<=[.!?])\s+/);
+  else                        parts = raw.split(/\n\s*\n/);
+  return parts.map(s => s.trim()).filter(s => s.length > 0);
+}
+
+function openBulkPaste() {
+  document.getElementById('bulkPastePanel').classList.remove('hidden');
+  document.getElementById('bulkPasteIn').focus();
+}
+
+function closeBulkPaste() {
+  document.getElementById('bulkPastePanel').classList.add('hidden');
+  document.getElementById('bulkPasteIn').value = '';
+  document.getElementById('bulkPreviewCount').textContent = 'Preview: paste text above to see how many examples will be added.';
+  document.getElementById('bulkAddBtn').disabled = true;
+}
+
+function bulkSplitChanged() {
+  const raw   = document.getElementById('bulkPasteIn').value;
+  const parts = _splitBulkText(raw, _getBulkSplitMode());
+  const n     = parts.length;
+  const el    = document.getElementById('bulkPreviewCount');
+  const btn   = document.getElementById('bulkAddBtn');
+  el.textContent = raw.trim() ? `Preview: ${n} example${n !== 1 ? 's' : ''} will be added.` : 'Preview: paste text above to see how many examples will be added.';
+  btn.disabled = n === 0;
+  if (n > 0) btn.textContent = `✓ Add ${n} example${n !== 1 ? 's' : ''}`;
+}
+
+async function bulkAddExamples() {
+  const raw   = document.getElementById('bulkPasteIn').value;
+  const parts = _splitBulkText(raw, _getBulkSplitMode());
+  if (!parts.length) return;
+  const btn = document.getElementById('bulkAddBtn');
+  btn.disabled = true;
+  btn.textContent = 'Adding…';
+  for (const text of parts) {
+    const res = await fetch('/api/upload', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({text}) });
+    const d   = await res.json();
+    if (!d.ok) continue;
+    _nData = d.count;
+    const item = document.createElement('div');
+    item.className = 'txt-item';
+    item.textContent = text.length > 72 ? text.slice(0, 72) + '…' : text;
+    document.getElementById('txtList').appendChild(item);
+  }
+  _updateCountBadge();
+  closeBulkPaste();
+}
+
 function _updateCountBadge() {
   if (_mode === 'classifier') return; // per-label counts shown inline
   const unit = _mode === 'image' ? 'image' : 'text sample';
@@ -1920,6 +2029,7 @@ async function clfAddLabel() {
 function clfRemoveLabel(label) {
   _clfLabels = _clfLabels.filter(l => l !== label);
   delete _clfCounts[label];
+  delete _clfThumbs[label];
   fetch('/api/classifier/labels', { method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ labels: _clfLabels }) });
   _clfRenderLabels();
@@ -1931,23 +2041,53 @@ function _clfRenderLabels() {
     list.innerHTML = '<div style="font-size:.88rem;color:var(--muted);padding:6px 0;" id="clfLabelEmpty">Add at least 2 labels to get started.</div>';
     return;
   }
+  const isText = (_inputMode === 'text');
   list.innerHTML = _clfLabels.map((lbl, i) => {
-    const color = _clfColors[i % _clfColors.length];
-    const count = _clfCounts[lbl] || 0;
+    const color  = _clfColors[i % _clfColors.length];
+    const count  = _clfCounts[lbl] || 0;
+    const thumbs = (_clfThumbs[lbl] || []);
+    const thumbHtml = thumbs.map((url, ti) => {
+      const isTextEx = url.startsWith('__text__:');
+      const safeLabel = lbl.replace(/'/g,"\\'");
+      if (isTextEx) {
+        const txt = url.slice(9);
+        const preview = txt.length > 30 ? txt.slice(0,30) + '…' : txt;
+        return `<div style="position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:7px;padding:3px 22px 3px 7px;font-size:.75rem;max-width:120px;overflow:hidden;white-space:nowrap;flex-shrink:0;" title="${txt.replace(/"/g,'&quot;')}">
+          ${preview}
+          <button class="clf-thumb-rm" style="position:absolute;top:50%;right:2px;transform:translateY(-50%);" onclick="_clfRemoveExample('${safeLabel}',${ti})">✕</button>
+        </div>`;
+      }
+      return `<div class="clf-thumb">
+        <img src="${url}" alt="">
+        <button class="clf-thumb-rm" onclick="_clfRemoveExample('${safeLabel}',${ti})">✕</button>
+      </div>`;
+    }).join('');
+    const uploadZone = isText
+      ? `<div style="display:flex;gap:6px;margin-bottom:4px;">
+           <input type="text" class="clf-txt-ex-in" id="clf-txtin-${CSS.escape(lbl)}"
+             placeholder="Type an example for &quot;${lbl}&quot;…"
+             style="flex:1;padding:7px 10px;border:1.5px solid var(--border);border-radius:9px;font-size:.88rem;font-family:inherit;background:var(--card);color:var(--text);outline:none;"
+             onkeydown="if(event.key==='Enter'){clfAddTextExample('${lbl.replace(/'/g,"\\'")}');event.preventDefault();}">
+           <button class="btn btn-secondary btn-sm" onclick="clfAddTextExample('${lbl.replace(/'/g,"\\'")}')">+ Add</button>
+           <button class="btn btn-secondary btn-sm" onclick="clfOpenTextBulk('${lbl.replace(/'/g,"\\'")}')">Bulk</button>
+         </div>`
+      : `<div class="clf-dz" onclick="clfOpenPicker('${lbl.replace(/'/g,"\\'")}')">
+           <div class="dz-icon" style="font-size:1.3rem;">📁</div>
+           Click to add images for <strong>${lbl}</strong>
+         </div>`;
     return `
     <div class="clf-label-sec" id="clf-sec-${CSS.escape(lbl)}">
       <div class="clf-label-hd">
         <div class="clf-label-dot" style="background:${color}"></div>
-        <span class="clf-label-name">${lbl}</span>
+        <span class="clf-label-name" id="clf-lname-${CSS.escape(lbl)}">${lbl}</span>
+        <button class="clf-label-rm" style="margin-left:2px;font-size:.75rem;padding:2px 5px;" title="Rename label"
+          onclick="clfStartRename('${lbl.replace(/'/g,"\\'")}')">✏️</button>
         <span class="clf-label-count" id="clf-cnt-${CSS.escape(lbl)}">${count} example${count!==1?'s':''}</span>
         <button class="clf-label-rm" onclick="clfRemoveLabel('${lbl.replace(/'/g,"\\'")}')">✕</button>
       </div>
       <div class="clf-label-body">
-        <div class="clf-dz" onclick="clfOpenPicker('${lbl.replace(/'/g,"\\'")}')">
-          <div class="dz-icon" style="font-size:1.3rem;">📁</div>
-          Click to add images for <strong>${lbl}</strong>
-        </div>
-        <div class="clf-thumb-grid" id="clf-thumbs-${CSS.escape(lbl)}"></div>
+        ${uploadZone}
+        <div class="clf-thumb-grid" id="clf-thumbs-${CSS.escape(lbl)}">${thumbHtml}</div>
       </div>
     </div>`;
   }).join('');
@@ -1958,6 +2098,37 @@ function clfOpenPicker(label) {
   const fi = document.getElementById('clfFileIn');
   fi.value = '';
   fi.click();
+}
+
+function clfStartRename(label) {
+  const nameEl = document.getElementById('clf-lname-' + CSS.escape(label));
+  if (!nameEl) return;
+  const inp = document.createElement('input');
+  inp.type = 'text'; inp.value = label;
+  inp.style.cssText = 'flex:1;padding:2px 7px;border:1.5px solid var(--primary);border-radius:6px;font-size:.93rem;font-weight:800;font-family:inherit;background:var(--card);color:var(--text);outline:none;min-width:60px;';
+  const commit = () => {
+    const newName = inp.value.trim();
+    if (newName && newName !== label) clfDoRename(label, newName);
+    else _clfRenderLabels();
+  };
+  inp.onblur = commit;
+  inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); inp.blur(); } if (e.key === 'Escape') { inp.onblur = null; _clfRenderLabels(); } };
+  nameEl.replaceWith(inp);
+  inp.focus(); inp.select();
+}
+
+async function clfDoRename(oldName, newName) {
+  if (_clfLabels.includes(newName)) { alert('A label named "' + newName + '" already exists.'); _clfRenderLabels(); return; }
+  const idx = _clfLabels.indexOf(oldName);
+  if (idx === -1) return;
+  _clfLabels[idx]   = newName;
+  _clfCounts[newName] = _clfCounts[oldName] || 0;
+  _clfThumbs[newName] = _clfThumbs[oldName] || [];
+  delete _clfCounts[oldName];
+  delete _clfThumbs[oldName];
+  await fetch('/api/classifier/rename-label', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ old_label: oldName, new_label: newName }) });
+  _clfRenderLabels();
 }
 
 function clfHandleFiles(files) {
@@ -1977,43 +2148,96 @@ async function _clfUploadExample(label, dataUrl) {
   const d = await res.json();
   if (!d.ok) return;
   _clfCounts = d.counts;
-  // Update count badge for this label
-  const lbl  = _clfLabels.indexOf(label);
-  const count = _clfCounts[label] || 0;
-  const badge = document.getElementById('clf-cnt-' + CSS.escape(label));
-  if (badge) badge.textContent = `${count} example${count!==1?'s':''}`;
-  // Add thumbnail
-  const grid = document.getElementById('clf-thumbs-' + CSS.escape(label));
-  if (grid) {
-    const idx  = count - 1;
-    const wrap = document.createElement('div'); wrap.className = 'clf-thumb';
-    const img  = document.createElement('img'); img.src = dataUrl;
-    const btn  = document.createElement('button'); btn.className = 'clf-thumb-rm'; btn.textContent = '✕';
-    btn.onclick = () => _clfRemoveExample(label, idx, wrap);
-    wrap.appendChild(img); wrap.appendChild(btn); grid.appendChild(wrap);
-  }
-  // Update total count
+  // Store thumb in persistent state then re-render
+  if (!_clfThumbs[label]) _clfThumbs[label] = [];
+  _clfThumbs[label].push(dataUrl);
+  _clfRenderLabels();
   _nData = Object.values(_clfCounts).reduce((s, v) => s + v, 0);
 }
 
-async function _clfRemoveExample(label, idx, el) {
-  el.remove();
+async function _clfRemoveExample(label, thumbIdx) {
+  // Remove from JS state immediately and re-render
+  if (_clfThumbs[label]) _clfThumbs[label].splice(thumbIdx, 1);
+  _clfRenderLabels();
   await fetch('/api/classifier/example', {
     method: 'POST', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ label, idx, action: 'remove' }),
+    body: JSON.stringify({ label, idx: thumbIdx, action: 'remove' }),
   });
-  // Re-fetch counts
   const res = await fetch('/api/info');
   const d = await res.json();
   if (d.count_per_label) {
     _clfCounts = d.count_per_label;
     _nData = Object.values(_clfCounts).reduce((s, v) => s + v, 0);
-    _clfLabels.forEach(lbl => {
-      const c = _clfCounts[lbl] || 0;
-      const badge = document.getElementById('clf-cnt-' + CSS.escape(lbl));
-      if (badge) badge.textContent = `${c} example${c!==1?'s':''}`;
-    });
+    _clfRenderLabels();
   }
+}
+
+async function clfAddTextExample(label) {
+  const inp  = document.getElementById('clf-txtin-' + CSS.escape(label));
+  if (!inp) return;
+  const text = inp.value.trim();
+  if (!text) return;
+  const res = await fetch('/api/classifier/example', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ label, data: text, action: 'add' }),
+  });
+  const d = await res.json();
+  if (!d.ok) return;
+  _clfCounts = d.counts;
+  if (!_clfThumbs[label]) _clfThumbs[label] = [];
+  _clfThumbs[label].push('__text__:' + text);
+  _clfRenderLabels();
+  _nData = Object.values(_clfCounts).reduce((s, v) => s + v, 0);
+  const inp2 = document.getElementById('clf-txtin-' + CSS.escape(label));
+  if (inp2) inp2.value = '';
+}
+
+function clfOpenTextBulk(label) {
+  _clfActive = label;
+  const panel = document.getElementById('clfTextBulkPanel');
+  if (!panel) return;
+  document.getElementById('clfTextBulkFor').textContent = label;
+  panel.classList.remove('hidden');
+  document.getElementById('clfTextBulkIn').focus();
+}
+
+function _getClfBulkSplitMode() {
+  return (document.querySelector('input[name="clfBulkSplit"]:checked') || {}).value || 'newline';
+}
+
+function clfBulkSplitChanged() {
+  const raw   = (document.getElementById('clfTextBulkIn') || {}).value || '';
+  const parts = _splitBulkText(raw, _getClfBulkSplitMode());
+  const n     = parts.length;
+  const el    = document.getElementById('clfBulkPreview');
+  const btn   = document.getElementById('clfBulkAddBtn');
+  if (el) el.textContent = raw.trim() ? `Preview: ${n} example${n!==1?'s':''} will be added.` : 'Preview: paste text above to see how many examples will be added.';
+  if (btn) { btn.disabled = n === 0; if (n > 0) btn.textContent = `✓ Add ${n} example${n!==1?'s':''}`; }
+}
+
+async function clfBulkAddExamples() {
+  const label = _clfActive;
+  if (!label) return;
+  const raw   = document.getElementById('clfTextBulkIn').value;
+  const parts = _splitBulkText(raw, _getClfBulkSplitMode());
+  if (!parts.length) return;
+  const btn = document.getElementById('clfBulkAddBtn');
+  btn.disabled = true; btn.textContent = 'Adding…';
+  for (const text of parts) {
+    const res = await fetch('/api/classifier/example', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ label, data: text, action: 'add' }),
+    });
+    const d = await res.json();
+    if (!d.ok) continue;
+    _clfCounts = d.counts;
+    if (!_clfThumbs[label]) _clfThumbs[label] = [];
+    _clfThumbs[label].push('__text__:' + text);
+  }
+  _nData = Object.values(_clfCounts).reduce((s, v) => s + v, 0);
+  _clfRenderLabels();
+  document.getElementById('clfTextBulkPanel').classList.add('hidden');
+  document.getElementById('clfTextBulkIn').value = '';
 }
 
 async function clearData() {
@@ -2489,7 +2713,19 @@ function setTheme(name) {
   if (name) document.body.dataset.theme = name;
   else delete document.body.dataset.theme;
   localStorage.setItem('brainy-theme', name || '');
-  ['lavender','orange','green','blue','pink'].forEach(t => {
+  const THEME_FILL = {
+    '': 'oklch(80% 0.12 283)', lavender: 'oklch(80% 0.12 283)',
+    orange: 'oklch(80% 0.11 42)', green: 'oklch(78% 0.10 168)',
+    columbia: '#8FBED1', pink: 'oklch(80% 0.13 340)'
+  };
+  const fill = THEME_FILL[name] || THEME_FILL[''];
+  ['mascotBody','mascotEyeL','mascotEyeR'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.fill = fill;
+  });
+  document.querySelectorAll('.mascot-mini-path').forEach(m => m.style.fill = fill);
+  document.querySelectorAll('.brand-a, .brand-i').forEach(el => el.style.color = fill);
+  ['lavender','orange','green','columbia','pink'].forEach(t => {
     const btn = document.getElementById('theme-btn-' + t);
     if (!btn) return;
     const active = (name === '' || name === 'lavender') ? t === 'lavender' : t === name;
@@ -2497,7 +2733,11 @@ function setTheme(name) {
     btn.style.outlineOffset = '2px';
   });
 }
-(function() { setTheme(localStorage.getItem('brainy-theme') || localStorage.getItem('brainy-trainer-theme') || ''); })();
+(function() {
+  let saved = localStorage.getItem('brainy-theme') || localStorage.getItem('brainy-trainer-theme') || '';
+  if (saved === 'blue' || saved === 'sky') saved = 'columbia';
+  setTheme(saved);
+})();
 
 // ── Mascot (exact copy from bba_ai) ───────────────────────────────────────────
 (function() {
@@ -2511,7 +2751,7 @@ function setTheme(name) {
   ];
   const FILLS = [
     'oklch(80% 0.12 283)', 'oklch(87% 0.13 42)', 'oklch(86% 0.12 168)',
-    'oklch(88% 0.1 340)',  'oklch(88% 0.12 220)', 'oklch(80% 0.12 283)',
+    'oklch(88% 0.1 340)',  '#8FBED1',              'oklch(80% 0.12 283)',
   ];
   const HOLD_MS = 2200, MORPH_MS = 1000;
   const ease = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
@@ -2533,13 +2773,19 @@ function setTheme(name) {
       }
     } else {
       const t = Math.min(elapsed / MORPH_MS, 1), e = ease(t);
-      if (interp) { const d = interp(e); body.setAttribute('d', d); if (clipP) clipP.setAttribute('d', d); }
+      if (interp) {
+        const d = interp(e);
+        body.setAttribute('d', d);
+        if (clipP) clipP.setAttribute('d', d);
+        document.querySelectorAll('.mascot-mini-path').forEach(m => m.setAttribute('d', d));
+      }
       if (t >= 1) {
         idx = (idx + 1) % SHAPES.length;
         const fill = FILLS[idx];
         body.style.fill = fill;
         document.getElementById('mascotEyeL').style.fill = fill;
         document.getElementById('mascotEyeR').style.fill = fill;
+        document.querySelectorAll('.mascot-mini-path').forEach(m => m.style.fill = fill);
         document.querySelectorAll('.brand-a, .brand-i').forEach(el => el.style.color = fill);
         phase = 'hold'; elapsed = 0; interp = null;
       }
@@ -2966,10 +3212,26 @@ function _fmtLibCard(e) {
                   ? ` · ${e.training_stats.final_accuracy.toFixed(1)}% acc` : '';
   const typeLbl = isImg ? 'Image Generator' : isClf ? 'Classifier' : 'Text Generator';
   const emoji   = e.emoji || (isImg ? '🎨' : isClf ? '🏷️' : '✍️');
-  const labelChips = isClf && e.labels?.length
-    ? `<div style="display:flex;flex-wrap:wrap;gap:4px;padding:8px 16px 0;">`
-      + (e.labels || []).map((l, i) => `<span style="font-size:.74rem;font-weight:700;border-radius:999px;padding:2px 8px;background:${_clfColors[i%_clfColors.length]}22;color:${_clfColors[i%_clfColors.length]};border:1px solid ${_clfColors[i%_clfColors.length]}44;">${l}</span>`).join('')
-      + '</div>'
+  const accPct   = isClf && e.training_stats?.final_accuracy != null
+                   ? e.training_stats.final_accuracy : null;
+  const clfPreview = isClf
+    ? `<div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;background:var(--card-bg);border-top:1px solid var(--border);">
+        <div style="font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;">Labels</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          ${(e.labels||[]).map((l,i)=>`<span style="font-size:.8rem;font-weight:700;border-radius:999px;padding:3px 10px;background:${_clfColors[i%_clfColors.length]}22;color:${_clfColors[i%_clfColors.length]};border:1px solid ${_clfColors[i%_clfColors.length]}44;">${l}</span>`).join('')}
+          ${!(e.labels||[]).length ? '<span style="font-size:.82rem;color:var(--muted);">No labels recorded</span>' : ''}
+        </div>
+        ${accPct != null ? `
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;">Accuracy</span>
+            <span style="font-size:.92rem;font-weight:800;color:#4ade80;">${accPct.toFixed(1)}%</span>
+          </div>
+          <div style="height:7px;background:var(--border);border-radius:4px;overflow:hidden;">
+            <div style="height:100%;width:${Math.min(accPct,100)}%;background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:4px;"></div>
+          </div>
+        </div>` : ''}
+      </div>`
     : '';
   return `
   <div class="lib-full-card" id="libfc-${e.id}" data-id="${e.id}" data-type="${e.model_type}" data-mode="${e.training_mode||'scratch'}">
@@ -2980,10 +3242,7 @@ function _fmtLibCard(e) {
         <div class="lib-meta">${typeLbl} · ${params} params · ${date}${acc}</div>
       </div>
     </div>
-    ${labelChips}
-    <div class="lib-fc-prev" id="libprev-${e.id}">
-      <div class="lib-fc-prev-ph">${isClf ? '🏷️ Classifier — no image preview' : '⏳ Loading preview…'}</div>
-    </div>
+    ${isClf ? clfPreview : `<div class="lib-fc-prev" id="libprev-${e.id}"><div class="lib-fc-prev-ph">⏳ Loading preview…</div></div>`}
     <div class="lib-fc-foot" id="libfoot-${e.id}">
       <button class="btn btn-sm btn-primary" onclick="loadLibModel('${e.id}')" style="flex:1;">Load →</button>
       <button class="btn btn-sm btn-secondary" onclick="startRename('${e.id}')">✏️ Rename</button>
@@ -3054,38 +3313,57 @@ function _renderLibPreview(id, cached) {
 
 // ── Library rename ─────────────────────────────────────────────────────────────
 function startRename(id) {
-  const foot = document.getElementById('libfoot-' + id);
-  if (!foot || foot.dataset.renaming) return;
-  foot.dataset.renaming = '1';
-  foot.classList.add('hidden');
-  const card = document.getElementById('libfc-' + id);
-  const nameEl = card?.querySelector('.lib-name-text');
-  const currentName = nameEl?.textContent?.trim() || '';
-  const row = document.createElement('div');
-  row.className = 'lib-fc-rename';
-  row.id = 'libren-' + id;
-  row.innerHTML = `<input class="text-input" id="libren-in-${id}" type="text" value="" style="flex:1;font-size:.9rem;padding:6px 10px;"><button class="btn btn-sm btn-primary" onclick="commitRename('${id}')">Save</button><button class="btn btn-sm btn-secondary" onclick="cancelRename('${id}')">Cancel</button>`;
-  card.appendChild(row);
-  const inp = document.getElementById('libren-in-' + id);
-  if (inp) { inp.value = currentName; inp.focus(); inp.select(); inp.addEventListener('keydown', e => { if (e.key==='Enter') commitRename(id); if (e.key==='Escape') cancelRename(id); }); }
-}
+  const nameDiv = document.getElementById('libname-' + id);
+  if (!nameDiv || nameDiv.dataset.editing) return;
+  nameDiv.dataset.editing = '1';
 
-async function commitRename(id) {
-  const inp = document.getElementById('libren-in-' + id);
-  const newName = (inp?.value || '').trim();
-  if (!newName) return;
-  const res  = await fetch('/api/rename', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id, name:newName}) });
-  const data = await res.json();
-  if (!data.ok) { alert('Rename failed: ' + (data.error||'unknown error')); return; }
-  const nameEl = document.querySelector('#libfc-' + id + ' .lib-name-text');
-  if (nameEl) nameEl.textContent = newName;
-  cancelRename(id);
-}
+  const nameSpan   = nameDiv.querySelector('.lib-name-text');
+  const currentName = nameSpan?.textContent?.trim() || '';
 
-function cancelRename(id) {
-  document.getElementById('libren-' + id)?.remove();
-  const foot = document.getElementById('libfoot-' + id);
-  if (foot) { delete foot.dataset.renaming; foot.classList.remove('hidden'); }
+  const inp = document.createElement('input');
+  inp.type      = 'text';
+  inp.value     = currentName;
+  inp.className = 'lib-inline-rename';
+  inp.style.cssText = [
+    'font-size:inherit', 'font-weight:inherit', 'letter-spacing:inherit',
+    'color:inherit', 'background:var(--primary-lite)', 'border:none',
+    'border-bottom:2px solid var(--primary)', 'outline:none',
+    'width:100%', 'border-radius:4px 4px 0 0', 'padding:1px 4px',
+    'font-family:inherit', 'box-sizing:border-box',
+  ].join(';');
+
+  nameSpan.replaceWith(inp);
+  inp.focus();
+  inp.select();
+
+  let committed = false;
+  const commit = async () => {
+    if (committed) return;
+    committed = true;
+    const newName = inp.value.trim();
+    const span = document.createElement('span');
+    span.className   = 'lib-name-text';
+    span.textContent = newName || currentName;
+    inp.replaceWith(span);
+    delete nameDiv.dataset.editing;
+    if (newName && newName !== currentName) {
+      const res  = await fetch('/api/rename', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({id, name:newName}) });
+      const data = await res.json();
+      if (!data.ok) { alert('Rename failed: ' + (data.error || 'unknown error')); span.textContent = currentName; }
+    }
+  };
+  const revert = () => {
+    if (committed) return;
+    committed = true;
+    const span = document.createElement('span');
+    span.className   = 'lib-name-text';
+    span.textContent = currentName;
+    inp.replaceWith(span);
+    delete nameDiv.dataset.editing;
+  };
+
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } if (e.key === 'Escape') revert(); });
+  inp.addEventListener('blur', commit);
 }
 
 async function loadLibModel(id) {
@@ -3131,11 +3409,39 @@ async function deleteLibModel(id) {
 
 function showEmojiPicker(id, el) {
   const popup  = document.getElementById('emojiPopup');
-  const emojis = ['🐦','🐕','🐈','🐰','🐻','🦊','🐺','🐟','🦋','🌸','🌊','🌿','⭐','🍕','🍎','🎵','🎨','😊','🚗','📖','💻','🧠','❤️','⚽','☁️','🏙️','🦁','⛰️','🤖','👻','🔥','✨','🎮','🎬','🎯','🌈','🌴','🌙','💎','🎃','🦅'];
+  const emojis = [
+    // magic & mystery
+    '🔮','🪄','✨','💫','🌟','⭐','🌠','☄️','🎱','👁️',
+    // tech & science
+    '🤖','🧠','💻','📱','📡','🔭','🔬','🧪','🧬','⚛️',
+    '⚙️','🔧','💡','🔋','📻','🎤','🔊','🎧','📷','🎥',
+    // music
+    '🎵','🎶','🎸','🎹','🎺','🎻','🥁','🎷','🪗','🪘',
+    // animals
+    '🐦','🦅','🦜','🦚','🦩','🐧','🦋','🐝','🐞','🕷️',
+    '🐕','🐈','🐰','🐻','🦊','🐺','🦁','🐯','🐘','🦒',
+    '🦓','🦏','🦛','🐊','🐢','🦎','🐸','🐙','🦑','🐬',
+    '🐳','🦈','🐟','🦀','🦞','🦔','🐿️','🦄','🐲','🦕',
+    // nature
+    '🌸','🌹','🌺','🌻','🌼','🍀','🌵','🌴','🌿','🍄',
+    '🍁','🌾','🌊','🏔️','⛰️','🌋','🌍','🌙','☀️','🌈',
+    '⚡','❄️','🔥','💧','☁️','🌤️','🌪️','🌊','🏝️','🌲',
+    // food
+    '🍕','🍔','🍣','🍜','🌮','🍩','🎂','🍫','🍓','🍇',
+    // objects & places
+    '📖','📚','🗺️','🏆','👑','💎','💍','🗝️','🔍','🪬',
+    '🎭','🎪','🏰','🗼','🚀','✈️','⛵','🚂','🏡','🎠',
+    // faces & people
+    '😊','😍','🤩','😎','👻','💀','👽','🧙','🦸','🧜',
+    // games & fun
+    '🎮','🎯','🎨','🎬','🎃','🎁','🎉','🎊','🪁','🎰',
+    // symbols
+    '❤️','🧡','💛','💚','💙','💜','⚽','🏀','🎱','⚔️',
+  ];
   popup.innerHTML = emojis.map(e => `<button class="emoji-pop-btn" onclick="pickEmoji('${id}','${e}')">${e}</button>`).join('');
   const rect = el.getBoundingClientRect();
   popup.style.top  = (rect.bottom + 6) + 'px';
-  popup.style.left = Math.min(rect.left, window.innerWidth - 340) + 'px';
+  popup.style.left = Math.min(rect.left, window.innerWidth - 356) + 'px';
   popup.classList.remove('hidden');
   setTimeout(() => {
     function onOut(ev) { if (!popup.contains(ev.target) && ev.target !== el) { popup.classList.add('hidden'); document.removeEventListener('click', onOut); } }
@@ -3452,13 +3758,15 @@ let _bBrainOptions = [];  // cached list from /api/library
 let _bhTab           = 'build';  // 'build' | 'simulate'
 let _simRunning      = false;
 let _simPaused       = false;
-let _simGenerating   = false;
+let _simGenerating        = false;
+let _simGeneratingPromise = null;  // shared across concurrent model_out rules
 let _simCamStream    = null;
 let _simCamInterval  = null;
 let _simAudioCtx     = null;
 let _simAudioAnalyser = null;
 let _simAudioInterval = null;
 let _simBrainLoaded  = false;
+let _simSpeechRecog  = null;
 const _ruleThrottle  = new Map();
 
 // ── Type config ───────────────────────────────────────────────────────────────
@@ -3496,11 +3804,29 @@ function _bhSwitchTab(tab) {
 // ── Bot emoji picker ──────────────────────────────────────────────────────────
 function bldOpenBotEmojiPicker(e) {
   const popup  = document.getElementById('emojiPopup');
-  const emojis = ['🤖','👾','🎯','🦾','⚡','🔬','🧪','📡','🎤','🔊','📷','💻','🧠','⚙️','🔮','🎨','🐦','🐕','🐈','🌸','🦁','🐻','🦊','🐧','🦋','⭐','🌈','🎵','🎮','🏆','❤️','🔥','✨'];
+  const emojis = [
+    '🔮','🪄','✨','💫','🌟','⭐','🌠','☄️','🎱','👁️',
+    '🤖','🧠','💻','📱','📡','🔭','🔬','🧪','🧬','⚛️',
+    '⚙️','🔧','💡','🔋','📻','🎤','🔊','🎧','📷','🎥',
+    '🎵','🎶','🎸','🎹','🎺','🎻','🥁','🎷','🪗','🪘',
+    '🐦','🦅','🦜','🦚','🦩','🐧','🦋','🐝','🐞','🕷️',
+    '🐕','🐈','🐰','🐻','🦊','🐺','🦁','🐯','🐘','🦒',
+    '🦓','🦏','🦛','🐊','🐢','🦎','🐸','🐙','🦑','🐬',
+    '🐳','🦈','🐟','🦀','🦞','🦔','🐿️','🦄','🐲','🦕',
+    '🌸','🌹','🌺','🌻','🌼','🍀','🌵','🌴','🌿','🍄',
+    '🍁','🌾','🌊','🏔️','⛰️','🌋','🌍','🌙','☀️','🌈',
+    '⚡','❄️','🔥','💧','☁️','🌤️','🌪️','🌊','🏝️','🌲',
+    '🍕','🍔','🍣','🍜','🌮','🍩','🎂','🍫','🍓','🍇',
+    '📖','📚','🗺️','🏆','👑','💎','💍','🗝️','🔍','🪬',
+    '🎭','🎪','🏰','🗼','🚀','✈️','⛵','🚂','🏡','🎠',
+    '😊','😍','🤩','😎','👻','💀','👽','🧙','🦸','🧜',
+    '🎮','🎯','🎨','🎬','🎃','🎁','🎉','🎊','🪁','🎰',
+    '❤️','🧡','💛','💚','💙','💜','⚽','🏀','🎱','⚔️',
+  ];
   popup.innerHTML = emojis.map(em => `<button class="emoji-pop-btn" onclick="bldPickBotEmoji('${em}')">${em}</button>`).join('');
   const rect = e.target.getBoundingClientRect();
   popup.style.top  = (rect.bottom + 6) + 'px';
-  popup.style.left = Math.min(rect.left, window.innerWidth - 340) + 'px';
+  popup.style.left = Math.min(rect.left, window.innerWidth - 356) + 'px';
   popup.classList.remove('hidden');
   setTimeout(() => {
     function onOut(ev) {
@@ -3640,7 +3966,7 @@ function _bSyncRules() {
 function _bTriggers(inputType) {
   return {
     camera:    [{v:'frame',    l:'captures a frame'}],
-    microphone:[{v:'detected', l:'hears sound'}],
+    microphone:[{v:'speech', l:'hears speech (transcribed)'},{v:'detected', l:'hears sound'}],
     button:    [{v:'pressed',  l:'is pressed'}],
     textinput: [{v:'submitted',l:'receives text'}],
   }[inputType] || [{v:'event', l:'triggers'}];
@@ -3824,13 +4150,20 @@ function bldNewBot() {
 async function bldRunBot() {
   if (!_bBrain) return;
 
-  // Load the selected brain model into the server session
-  // Switch to Simulate tab and reset display
+  // Unlock Chrome's TTS inside the user gesture before any await breaks the gesture chain.
+  // cancel() alone is not enough — speak() must be called to satisfy Chrome's autoplay policy.
+  if ('speechSynthesis' in window) {
+    const _primer = new SpeechSynthesisUtterance('​');
+    _primer.volume = 0;
+    window.speechSynthesis.speak(_primer);
+  }
+
   _bhSwitchTab('simulate');
   document.getElementById('simHdBotName').textContent = _bBotName;
   document.getElementById('simInputsArea').innerHTML  = '';
   document.getElementById('simOutputsArea').innerHTML = '';
-  document.getElementById('simLog').innerHTML         = '';
+  document.getElementById('simLog').innerHTML = '';
+  _simLogLastMsg = null; _simLogLastEl = null; _simLogLastCount = 1;
 
   if (!_simBrainLoaded) {
     _simLogAdd('⚙️ Loading brain…', 'sys');
@@ -3894,7 +4227,7 @@ function _simMkInputWidget(inp) {
       div.innerHTML = `<div class="sim-widget-lbl">${c.icon} ${c.label}</div><video class="sim-cam-video" id="simcam-${inp.id}" autoplay muted playsinline></video>`;
       break;
     case 'microphone':
-      div.innerHTML = `<div class="sim-widget-lbl">${c.icon} ${c.label}</div><div class="sim-audio-wrap"><div class="sim-audio-bar"><div class="sim-audio-fill" id="simaudio-${inp.id}"></div></div></div>`;
+      div.innerHTML = `<div class="sim-widget-lbl">${c.icon} ${c.label}</div><div class="sim-audio-wrap"><div class="sim-audio-bar"><div class="sim-audio-fill" id="simaudio-${inp.id}"></div></div><div class="sim-speech-heard" id="simspeech-${inp.id}" style="display:none;margin-top:6px;font-size:.78rem;color:var(--muted);font-style:italic;">Listening…</div></div>`;
       break;
     case 'button':
       div.innerHTML = `<div class="sim-btn-widget" id="simbtn-${inp.id}">${c.icon} ${c.label}<br><small style="opacity:.6">Press <kbd style="background:var(--card);border:1.5px solid var(--border);border-radius:4px;padding:1px 6px;font-family:monospace;">SPACE</kbd></small></div>`;
@@ -3916,7 +4249,7 @@ function _simMkOutputWidget(out) {
       div.innerHTML = `<div class="sim-widget-lbl">${c.icon} ${c.label}</div><div class="sim-screen-out" id="simscreen-${out.id}"><span style="color:#475569;font-style:italic">Waiting…</span></div>`;
       break;
     case 'speaker':
-      div.innerHTML = `<div class="sim-widget-lbl">${c.icon} ${c.label}</div><div class="sim-speaker-wrap"><span class="sim-speaker-icon" id="simspeaker-${out.id}">🔊</span></div>`;
+      div.innerHTML = `<div class="sim-widget-lbl">${c.icon} ${c.label}</div><div class="sim-speaker-wrap"><span class="sim-speaker-icon" id="simspeaker-${out.id}">🔊</span><div class="sim-speaker-text" id="simspeakertxt-${out.id}" style="font-size:.8rem;color:var(--muted);margin-top:4px;text-align:center;font-style:italic;">Waiting…</div></div>`;
       break;
     case 'printer':
       div.innerHTML = `<div class="sim-widget-lbl">${c.icon} ${c.label}</div><div class="sim-printer-paper" id="simprinter-${out.id}"></div>`;
@@ -3973,6 +4306,49 @@ async function _simStartMic() {
   } catch (e) {
     _simLogAdd('⚠ Mic not available: ' + e.message, 'err');
   }
+
+  // SpeechRecognition — always start when mic is present so transcripts appear in log
+  // regardless of which trigger type the rule uses.
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SR) {
+    _simSpeechRecog = new SR();
+    _simSpeechRecog.continuous    = true;
+    _simSpeechRecog.interimResults = false;
+    _simSpeechRecog.lang           = 'en-US';
+    _simSpeechRecog.onresult = (e) => {
+      if (_simPaused || !_simRunning) return;
+      const transcript = Array.from(e.results)
+        .slice(e.resultIndex)
+        .filter(r => r.isFinal)
+        .map(r => r[0].transcript.trim())
+        .join(' ');
+      if (!transcript) return;
+      _simLogAdd('🎤 Heard: "' + transcript + '"', 'in');
+      _bInputs.filter(i => i.type === 'microphone').forEach(inp => {
+        const heard = document.getElementById('simspeech-' + inp.id);
+        if (heard) { heard.style.display = 'block'; heard.textContent = '🗣 "' + transcript + '"'; }
+        _bRules.filter(r => r.inputId === inp.id && r.trigger === 'speech')
+               .forEach(rule => _simFireRule(rule, {source:'speech', text: transcript}));
+      });
+    };
+    _simSpeechRecog.onerror = (e) => {
+      if (e.error !== 'no-speech') _simLogAdd('⚠ Speech recognition error: ' + e.error, 'err');
+    };
+    _simSpeechRecog.onend = () => {
+      // Auto-restart unless we stopped intentionally
+      if (_simRunning && !_simPaused && _simSpeechRecog) {
+        try { _simSpeechRecog.start(); } catch (_) {}
+      }
+    };
+    try {
+      _simSpeechRecog.start();
+      _simLogAdd('🗣 Speech recognition active', 'sys');
+    } catch (e) {
+      _simLogAdd('⚠ Speech recognition failed: ' + e.message, 'err');
+    }
+  } else {
+    _simLogAdd('⚠ This browser doesn\'t support speech-to-text. Mic can still trigger audio-classifier rules.', 'err');
+  }
 }
 
 function _simKeyHandler(e) {
@@ -4020,44 +4396,60 @@ async function _simFireRule(rule, triggerData) {
   let content = null;
 
   if (rule.action === 'model_out') {
-    if (_simGenerating) { _simLogAdd('🧠 Still thinking — skipped', 'sys'); return; }
-    _simGenerating = true;
-    _simLogAdd('🧠 Thinking…', 'sys');
-    try {
-      if (_bBrain.model_type === 'classifier') {
-        // Capture camera frame (or use text) and run /api/predict
-        let dataPayload;
-        if (inp?.type === 'camera') {
-          const vid = document.getElementById('simcam-' + inp.id);
-          if (!vid || !vid.srcObject) throw new Error('Camera not started — check browser permissions.');
-          const canvas = document.createElement('canvas');
-          canvas.width  = vid.videoWidth  || 320;
-          canvas.height = vid.videoHeight || 240;
-          canvas.getContext('2d').drawImage(vid, 0, 0);
-          dataPayload = canvas.toDataURL('image/jpeg', 0.7);
-        } else {
-          dataPayload = triggerData.text || '';
-        }
-        const d = await _simSafeJson('/api/predict', {data: dataPayload});
-        if (!d.ok) throw new Error(d.error || 'predict failed');
-        const label = d.label || '?';
-        const conf  = d.confidence != null ? ` (${d.confidence}%)` : '';
-        content = {type: 'text', data: label + conf};
-      } else if (_bBrain.model_type === 'image_generator') {
-        const d = await _simSafeJson('/api/generate', {n: 1});
-        if (!d.ok) throw new Error(d.error || 'generate failed');
-        content = {type: 'image', data: d.grid};
+    if (_simGenerating) {
+      // Another rule already called the brain — wait for it and reuse the result
+      // so both outputs (e.g. speaker + printer) get the same generated text.
+      if (_simGeneratingPromise) {
+        content = await _simGeneratingPromise;
+        if (!content) return;
       } else {
-        const d = await _simSafeJson('/api/generate', {prompt: triggerData.text || '', length: 150, temperature: 0.9});
-        if (!d.ok) throw new Error(d.error || 'generate failed');
-        content = {type: 'text', data: d.text || ''};
+        _simLogAdd('🧠 Still thinking — skipped', 'sys'); return;
       }
-    } catch (e) {
-      _simLogAdd('⚠ Brain error: ' + e.message, 'err');
+    } else {
+      _simGenerating = true;
+      let _resolve;
+      _simGeneratingPromise = new Promise(res => _resolve = res);
+      _simLogAdd('🧠 Thinking…', 'sys');
+      try {
+        if (_bBrain.model_type === 'classifier') {
+          // Capture camera frame (or use text) and run /api/predict
+          let dataPayload;
+          if (inp?.type === 'camera') {
+            const vid = document.getElementById('simcam-' + inp.id);
+            if (!vid || !vid.srcObject) throw new Error('Camera not started — check browser permissions.');
+            const canvas = document.createElement('canvas');
+            canvas.width  = vid.videoWidth  || 320;
+            canvas.height = vid.videoHeight || 240;
+            canvas.getContext('2d').drawImage(vid, 0, 0);
+            dataPayload = canvas.toDataURL('image/jpeg', 0.7);
+          } else {
+            dataPayload = triggerData.text || '';
+          }
+          const d = await _simSafeJson('/api/predict', {data: dataPayload});
+          if (!d.ok) throw new Error(d.error || 'predict failed');
+          const label = d.label || '?';
+          const conf  = d.confidence != null ? ` (${d.confidence}%)` : '';
+          content = {type: 'text', data: label + conf};
+        } else if (_bBrain.model_type === 'image_generator') {
+          const d = await _simSafeJson('/api/generate', {n: 1});
+          if (!d.ok) throw new Error(d.error || 'generate failed');
+          content = {type: 'image', data: d.grid};
+        } else {
+          const d = await _simSafeJson('/api/generate', {prompt: triggerData.text || '', length: 150, temperature: 0.9});
+          if (!d.ok) throw new Error(d.error || 'generate failed');
+          content = {type: 'text', data: d.text || ''};
+        }
+        _resolve(content);
+      } catch (e) {
+        _resolve(null);
+        _simLogAdd('⚠ Brain error: ' + e.message, 'err');
+        _simGenerating = false;
+        _simGeneratingPromise = null;
+        return;
+      }
       _simGenerating = false;
-      return;
+      _simGeneratingPromise = null;
     }
-    _simGenerating = false;
   } else if (['show_text','say_text','print_text'].includes(rule.action)) {
     content = {type:'text', data: rule.content || '(no text set)'};
   } else {
@@ -4066,10 +4458,13 @@ async function _simFireRule(rule, triggerData) {
 
   _simActivateOutput(out, content);
 
-  const preview = content.type === 'image' ? '[image]'
-                : content.type === 'text'  ? (content.data.slice(0,60) + (content.data.length > 60 ? '…' : ''))
-                : content.data;
-  _simLogAdd(`${_OUTPUT_CFG[out.type].icon} ${_OUTPUT_CFG[out.type].label}: ${preview}`, 'out');
+  // Speaker logs its own detailed message; skip generic log for it
+  if (out.type !== 'speaker') {
+    const preview = content.type === 'image' ? '[image]'
+                  : content.type === 'text'  ? (content.data.slice(0,60) + (content.data.length > 60 ? '…' : ''))
+                  : content.data;
+    _simLogAdd(`${_OUTPUT_CFG[out.type].icon} ${_OUTPUT_CFG[out.type].label}: ${preview}`, 'out');
+  }
 }
 
 function _simActivateOutput(out, content) {
@@ -4086,12 +4481,22 @@ function _simActivateOutput(out, content) {
     }
     case 'speaker': {
       const text = content.type === 'text' ? content.data : '';
-      if (text && 'speechSynthesis' in window) {
-        const utt  = new SpeechSynthesisUtterance(text);
-        const icon = document.getElementById('simspeaker-' + out.id);
-        if (icon) { icon.classList.add('active'); utt.onend = () => icon.classList.remove('active'); }
-        window.speechSynthesis.speak(utt);
+      if (!('speechSynthesis' in window)) {
+        _simLogAdd('⚠ Browser doesn\'t support text-to-speech', 'err');
+        break;
       }
+      if (!text) {
+        _simLogAdd('⚠ Speaker received no text to speak', 'err');
+        break;
+      }
+      const txtEl = document.getElementById('simspeakertxt-' + out.id);
+      if (txtEl) txtEl.textContent = '”' + text + '”';
+      _simLogAdd(`🔊 Speaker said: “${text.length > 60 ? text.slice(0, 60) + '…' : text}”`, 'out');
+      const utt  = new SpeechSynthesisUtterance(text);
+      const icon = document.getElementById('simspeaker-' + out.id);
+      if (icon) { icon.classList.add('active'); utt.onend = () => icon.classList.remove('active'); }
+      utt.onerror = (e) => _simLogAdd('⚠ TTS error: ' + e.error, 'err');
+      window.speechSynthesis.speak(utt);
       break;
     }
     case 'printer': {
@@ -4146,15 +4551,35 @@ function _simPlaySound(type) {
   } catch (_) {}
 }
 
+let _simLogLastMsg   = null;
+let _simLogLastEl    = null;
+let _simLogLastCount = 1;
+
 function _simLogAdd(msg, type = 'sys') {
   const el = document.getElementById('simLog');
   if (!el) return;
-  const ts  = new Date().toLocaleTimeString();
+  const ts = new Date().toLocaleTimeString();
+  // Group consecutive identical messages in-place
+  if (msg === _simLogLastMsg && _simLogLastEl && _simLogLastEl.parentNode === el) {
+    _simLogLastCount++;
+    let badge = _simLogLastEl.querySelector('.sim-count');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'sim-count';
+      _simLogLastEl.appendChild(badge);
+    }
+    badge.textContent = '×' + _simLogLastCount;
+    return;
+  }
+  _simLogLastMsg   = msg;
+  _simLogLastCount = 1;
   const div = document.createElement('div');
   div.className = `sim-entry sim-entry-${type}`;
   div.innerHTML  = `<span class="sim-ts">${ts}</span>${msg.replace(/</g,'&lt;')}`;
-  el.appendChild(div);
-  el.scrollTop = el.scrollHeight;
+  el.insertBefore(div, el.firstChild);
+  _simLogLastEl = div;
+  // Cap at 50 entries
+  while (el.children.length > 50) el.removeChild(el.lastChild);
 }
 
 // ── Simulator controls ────────────────────────────────────────────────────────
@@ -4168,6 +4593,7 @@ function bldTogglePause() {
 function bldResetBot() {
   const el = document.getElementById('simLog');
   if (el) el.innerHTML = '';
+  _simLogLastMsg = null; _simLogLastEl = null; _simLogLastCount = 1;
   _ruleThrottle.clear();
   _simGenerating = false;
   _simLogAdd('🔄 Reset', 'sys');
@@ -4181,6 +4607,7 @@ function bldStopBot() {
   if (_simAudioInterval){ clearInterval(_simAudioInterval); _simAudioInterval = null; }
   if (_simCamStream)    { _simCamStream.getTracks().forEach(t => t.stop()); _simCamStream = null; }
   if (_simAudioCtx)     { _simAudioCtx.close().catch(()=>{}); _simAudioCtx = null; }
+  if (_simSpeechRecog)  { try { _simSpeechRecog.stop(); } catch (_) {} _simSpeechRecog = null; }
   document.removeEventListener('keydown', _simKeyHandler);
   _bhSwitchTab('build');
 }

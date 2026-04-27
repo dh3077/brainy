@@ -470,6 +470,27 @@ def classifier_example():
     return jsonify({'ok': True, 'counts': state['trainer'].count_per_label()})
 
 
+@app.post('/api/classifier/rename-label')
+def rename_label():
+    data  = request.get_json(force=True) or {}
+    state = _state()
+    if not isinstance(state.get('trainer'), ClassifierTrainer):
+        return jsonify({'ok': False, 'error': 'No classifier active.'})
+    old_label = (data.get('old_label') or '').strip()
+    new_label = (data.get('new_label') or '').strip()
+    if not old_label or not new_label:
+        return jsonify({'ok': False, 'error': 'old_label and new_label required.'})
+    trainer = state['trainer']
+    if old_label not in trainer.labels:
+        return jsonify({'ok': False, 'error': f'Label "{old_label}" not found.'})
+    if new_label in trainer.labels:
+        return jsonify({'ok': False, 'error': f'Label "{new_label}" already exists.'})
+    idx = trainer.labels.index(old_label)
+    trainer.labels[idx] = new_label
+    trainer._examples[new_label] = trainer._examples.pop(old_label, [])
+    return jsonify({'ok': True, 'labels': trainer.labels})
+
+
 @app.post('/api/predict')
 def predict():
     data  = request.get_json(force=True) or {}
